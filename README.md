@@ -1,5 +1,5 @@
-# CienciaDatos2024-1
- Repositorio que contiene los ejemplos para la exploración, análsis de datos, entrenamiento de modelos y algunas aplicaciones
+# Inegi_explore
+ Repositorio que contiene la exploración de los datos del inegi, análsis de datos, entrenamiento de modelos y algunas aplicacione
 
 El ambiente virtual utilizado puede ser recreado con el archivo requirements.txt
 
@@ -18,4 +18,4 @@ Para activar el ambiente virtual
 - Scikit Learn
 - Tensorflow
 - Keras
-![datascience](https://github.com/alx3416/CienciaDatos2024-1/assets/63263335/acb0d74b-8523-4bd3-9963-b30558008f64)
+
