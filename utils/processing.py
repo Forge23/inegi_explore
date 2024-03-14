@@ -20,12 +20,7 @@ def save_correlations(data):
     correlations.to_csv("output/correlations.csv")
     print("Correlation data saved as 'output/correlations.csv'")
 
-def save_correlations2(data2):
-    check_output_folder("output")
-    correlations = data2.corr()
-    # Guardar las correlaciones en un archivo CSV
-    correlations.to_csv("output/correlations_inegi.csv")
-    print("Correlation data saved as 'output/correlations_inegi.csv'")    
+    
 
 
 def get_correlations(data):

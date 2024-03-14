@@ -4,7 +4,7 @@ import utils.processing as proc
 
 # cargar dataset diabetes desde folder data
 dataset = imp.read_diabetes_dataset("data/diabetes.tab.txt")
-dataset2 = imp.read_diabetes_dataset("data/conjunto_de_datos_natalidad_2022.csv")
+
 
 # Generar y guardar los histogramas para una exploración inicial
 visu.save_histogram(dataset, "AGE")

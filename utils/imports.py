@@ -6,6 +6,4 @@ def read_diabetes_dataset(path):
     data = pd.read_csv(path, sep="\t")
     return data
 
-def read_inegi_datset(path):
-    data2 =pd.read_csv(path, sep="\t")
-    return data2
+
