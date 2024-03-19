@@ -42,7 +42,7 @@ def normalize_diabetes_data(data):
     normalized_data = normalized_data.div(std_data, axis='columns')
     val = (1 / mt.sqrt(data.shape[0]))
     normalized_data = normalized_data.mul(val, axis='columns')
-    normalized_data["Y"] = data["Y"]
+    normalized_data["tipo_nac"] = data["tipo_nac"]
     return normalized_data
 
 
