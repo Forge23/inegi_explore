@@ -42,9 +42,19 @@ def normalize_diabetes_data(data):
     normalized_data = normalized_data.div(std_data, axis='columns')
     val = (1 / mt.sqrt(data.shape[0]))
     normalized_data = normalized_data.mul(val, axis='columns')
-    normalized_data["tipo_nac"] = data["tipo_nac"]
+    normalized_data["edad_madn"] = data["edad_madn"]
     return normalized_data
 
+def normalize_cancer_data(data):
+    # formula ->  Z = (1/sqrt(n)) * ((x-mu)/std)
+    mu_data = data.mean()
+    std_data = data.std()
+    normalized_data = data.sub(mu_data, axis='columns')
+    normalized_data = normalized_data.div(std_data, axis='columns')
+    val = (1 / mt.sqrt(data.shape[0]))
+    normalized_data = normalized_data.mul(val, axis='columns')
+    normalized_data["diagnosis_num"] = data["diagnosis_num"]
+    return normalized_data
 
 def split_data(data, split_percentage):
     training_data = data.sample(frac=split_percentage)
