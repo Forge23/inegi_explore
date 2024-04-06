@@ -47,11 +47,17 @@ def save_correlation(data, var1, var2):
 
 def save_all_correlations_one_image(data):
     proc.check_output_folder("output")
-    fig = sns.pairplot(data, hue="SEX")
+    fig = sns.pairplot(data, hue="radius_mean")
     fig.savefig("output/All_histograms.png")
     plt.close()
     pass
 
+def save_specific_correlations_one_image(data, columns):
+    # Create a pair plot for the specified columns
+    fig = sns.pairplot(data[columns], hue="diagnosis_num")
+    plt.savefig("output/All_histograms.png")
+    plt.close()
+    
   
 def save_all_correlations(data, correlations):
     #checar si la carpeta output existe, si no, crearla
@@ -67,3 +73,20 @@ def save_all_correlations(data, correlations):
             if i != j:
                 save_correlation(data, correlations.columns[i], correlations.columns[j])
 
+def save_specific_correlations(data, columns):
+    #checar si la carpeta output existe, si no, crearla
+    proc.check_output_folder("output/correlations")
+    
+    # Calcular las correlaciones para las columnas en específico
+    correlations = data[columns].corr()
+    
+    #guardar las correlaciones en un solo archivo
+    correlations.to_csv("output/correlations/specific_correlations.csv")
+
+    # Crear el gráfico
+    fig = px.imshow(correlations)
+    
+    #guardar todas las correlaciones en imágenes individuales png
+    for i in range(len(columns)):
+        for j in range(i+1, len(columns)):
+            save_correlation(data, columns[i], columns[j])
