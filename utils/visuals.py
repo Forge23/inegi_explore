@@ -1,4 +1,6 @@
 import seaborn as sns
+from sklearn import metrics
+from sklearn.metrics import classification_report
 import utils.processing as proc
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
@@ -7,6 +9,29 @@ import numpy as np
 import pandas as pd
 import os
 
+def save_confusion_matrix(y_true, y_pred, target_names):
+    # checar folder de salida
+    proc.check_output_folder("output/matrix")
+    print(classification_report(y_true, y_pred, target_names=target_names))
+    confusion = metrics.confusion_matrix(y_true, y_pred)
+    plt.figure(figsize=(10, 7))
+    sns.heatmap(confusion, annot=True, fmt='d')
+
+    # salvar figura como confusion_matrix.png
+    plt.title("Matriz de Confusión")
+    plt.savefig(f"output/matrix/confusion_matrix.png")
+    plt.clf()
+    plt.close()
+
+def save_roc_curve(diabetes_y_test, diabetes_y_pred):
+    # checar folder de salida
+    proc.check_output_folder("output")
+    # generar curva ROC
+    new_fig = plt.figure()
+    metrics.RocCurveDisplay.from_predictions(diabetes_y_test, diabetes_y_pred)
+    # salvarla como curve_ROC.png
+    plt.savefig("output/curve_ROC.png")
+    plt.close(new_fig)
 
 def save_histogram(data, column):
     proc.check_output_folder("output/histograms")

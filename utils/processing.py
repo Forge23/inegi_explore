@@ -1,7 +1,7 @@
 import os
 import math as mt
 import pandas as pd
-from sklearn import linear_model
+from sklearn import linear_model, preprocessing
 from sklearn.metrics import mean_squared_error, r2_score
 
 
@@ -75,6 +75,17 @@ def test_predictions(model, input_test, columns):
     output_test = model.predict(input_test.values.reshape(-1, columns))
     return output_test
 
+def values_2_categorical(data):
+    # https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html
+    # Encode target labels with value between 0 and n_classes-1.
+    lab = preprocessing.LabelEncoder()
+    return lab.fit_transform(data)
+
+def logistic_regression(input_train, output_train):
+    # https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
+    model = linear_model.LogisticRegression()
+    model.fit(input_train, output_train)
+    return model
 
 def get_coefficients(model):
     return model.coef_
