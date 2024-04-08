@@ -58,7 +58,12 @@ def save_specific_correlations_one_image(data, columns):
     plt.savefig("output/All_histograms.png")
     plt.close()
     
-  
+def save_specific_correlations_one_image_inegi(data, columns):
+    # Create a pair plot for the specified columns
+    fig = sns.pairplot(data[columns], hue="edad_madn")
+    plt.savefig("output/All_histograms.png")
+    plt.close()
+
 def save_all_correlations(data, correlations):
     #checar si la carpeta output existe, si no, crearla
     proc.check_output_folder("output/correlations")
