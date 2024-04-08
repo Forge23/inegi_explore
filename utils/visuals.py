@@ -61,7 +61,7 @@ def save_specific_correlations_one_image(data, columns):
 def save_specific_correlations_one_image_inegi(data, columns):
     # Create a pair plot for the specified columns
     fig = sns.pairplot(data[columns], hue="edad_madn")
-    plt.savefig("output/All_histograms.png")
+    plt.savefig("output/All_histograms_inegi.png")
     plt.close()
 
 def save_all_correlations(data, correlations):
