@@ -1,6 +1,7 @@
 import seaborn as sns
 from sklearn import metrics
 from sklearn.metrics import classification_report
+from sklearn.tree import plot_tree
 import utils.processing as proc
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
@@ -40,6 +41,12 @@ def save_histogram(data, column):
     fig.savefig("output/histograms/histogram_" + column + ".png")
     plt.close()
 
+def plot_model_tree(regressionTree, columnsNames):
+    plt.figure(figsize=(20, 16), dpi=300)
+    plt.title('Decission Tree')
+    plot_tree(regressionTree, feature_names=columnsNames)
+    plt.show()
+    plt.close()
 
 def save_histograms(data):
     proc.check_output_folder("output/histograms")

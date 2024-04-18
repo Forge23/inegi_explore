@@ -1,7 +1,7 @@
 import os
 import math as mt
 import pandas as pd
-from sklearn import linear_model, preprocessing
+from sklearn import linear_model, preprocessing, tree
 from sklearn.metrics import mean_squared_error, r2_score
 
 
@@ -67,6 +67,12 @@ def split_data(data, split_percentage):
 
 def simple_linear_regression(input_train, output_train, cols):
     regr = linear_model.LinearRegression()
+    inputs = input_train.values.reshape(-1, cols)
+    regr.fit(inputs, output_train)
+    return regr
+
+def regression_tree(input_train, output_train, cols):
+    regr = tree.DecisionTreeRegressor()
     inputs = input_train.values.reshape(-1, cols)
     regr.fit(inputs, output_train)
     return regr
