@@ -1,4 +1,7 @@
 import seaborn as sns
+from sklearn import metrics
+from sklearn.metrics import classification_report
+from sklearn.tree import plot_tree
 import utils.processing as proc
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
@@ -7,19 +10,43 @@ import numpy as np
 import pandas as pd
 import os
 
+def save_confusion_matrix(y_true, y_pred, target_names):
+    # checar folder de salida
+    proc.check_output_folder("output/matrix")
+    print(classification_report(y_true, y_pred, target_names=target_names))
+    confusion = metrics.confusion_matrix(y_true, y_pred)
+    plt.figure(figsize=(10, 7))
+    sns.heatmap(confusion, annot=True, fmt='d')
 
-def save_histogram(data, column):
+    # salvar figura como confusion_matrix.png
+    plt.title("Matriz de Confusión")
+    plt.savefig(f"output/matrix/confusion_matrix.png")
+    plt.clf()
+    plt.close()
+
+def save_roc_curve(diabetes_y_test, diabetes_y_pred):
+    # checar folder de salida
+    proc.check_output_folder("output")
+    # generar curva ROC
+    new_fig = plt.figure()
+    metrics.RocCurveDisplay.from_predictions(diabetes_y_test, diabetes_y_pred)
+    # salvarla como curve_ROC.png
+    plt.savefig("output/curve_ROC.png")
+    plt.close(new_fig)
+
+def save_histogram(data, column,hue_col=None):
     proc.check_output_folder("output/histograms")
-    sns_plot = sns.histplot(data=data[column], kde=True)
+    sns_plot = sns.histplot(x=column, data=data, hue=hue_col, kde=True)
     fig = sns_plot.get_figure()
+    sns_plot.set(title=f"{column}")
     fig.savefig("output/histograms/histogram_" + column + ".png")
     plt.close()
 
 
-def save_histograms(data):
+def save_histograms(data,hue_col=None):
     proc.check_output_folder("output/histograms")
     for column in data.columns:
-        save_histogram(data, column)
+        save_histogram(data, column,hue_col)
 
 
 def save_correlation(data, var1, var2):
@@ -44,6 +71,22 @@ def save_correlation(data, var1, var2):
     plt.clf()
     plt.close()
 
+def save_specific_correlations_individual(data, columns, hue_col):
+ 
+    correlations = data[columns].corr()
+    
+
+    correlations.to_csv("output/correlations/all_correlations.csv")
+    
+    for i in range(len(columns)):
+        for j in range(i+1, len(columns)):
+            col1 = columns[i]
+            col2 = columns[j]
+            filename = f"output/scatterplots/{col1}_{col2}_correlation_plot.png"
+            fig = plt.figure()
+            sns.scatterplot(data=data, x=col1, y=col2, hue=hue_col)
+            plt.savefig(filename)
+            plt.close()
 
 def save_all_correlations_one_image(data):
     proc.check_output_folder("output")
@@ -90,3 +133,17 @@ def save_specific_correlations(data, columns):
     for i in range(len(columns)):
         for j in range(i+1, len(columns)):
             save_correlation(data, columns[i], columns[j])
+
+
+def corrfunc(x, y, **kws):
+    r, _ = stats.pearsonr(x, y)
+    ax = plt.gca()
+    # count how many annotations are already present
+    n = len([c for c in ax.get_children() if 
+                  isinstance(c, matplotlib.text.Annotation)])
+    pos = (.1, .9 - .1*n)
+    # or make positions for every label by hand
+    pos = (.1, .9) if kws['label'] == 'Yes' else (.1,.8)
+
+    ax.annotate("{}: r = {:.2f}".format(kws['label'],r),
+                xy=pos, xycoords=ax.transAxes)
