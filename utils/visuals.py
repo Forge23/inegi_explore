@@ -62,7 +62,7 @@ def save_correlation(data, var1, var2):
     correlation_value = data[var1].corr(data[var2])
 
     # Crear el gráfico de correlación
-    sns.scatterplot(data=data, x=var1, y=var2)
+    sns.scatterplot(data=data, x=var1, y=var2, hue="diagnosis_num")
 
     # Añadir el valor de correlación como parte del título
     plt.title(f"Correlación entre {var1} y {var2}: {correlation_value}")
@@ -79,8 +79,8 @@ def save_correlation(data, var1, var2):
 
 def save_all_correlations_one_image(data):
     proc.check_output_folder("output")
-    fig = sns.pairplot(data, hue="radius_mean")
-    fig.savefig("output/All_histograms.png")
+    fig = sns.pairplot(data, hue="diagnosis_num")
+    fig.savefig("output/All_histograms1.png")
     plt.close()
     pass
 
