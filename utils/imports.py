@@ -1,6 +1,8 @@
 import csv
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
 
 label_encoder = LabelEncoder()
 
